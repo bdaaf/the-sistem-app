@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="THE SYSTEM: tu sistema personal de misiones y progreso.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>THE SYSTEM</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">S</span><div><b>THE SYSTEM</b><small>PERSONAL GROWTH PROTOCOL</small></div></div>
+    <button id="resetBtn" class="icon-btn" title="Reiniciar datos" aria-label="Reiniciar datos">↻</button>
+  </header>
+
+  <main>
+    <section class="hero panel">
+      <div class="eyebrow">ESTADO DEL JUGADOR</div>
+      <div class="hero-row">
+        <div><div class="rank" id="rank">E</div><div class="muted">RANGO ACTUAL</div></div>
+        <div class="level-wrap"><div class="muted">NIVEL <strong id="level">1</strong></div><div class="xp-line"><span id="xpFill"></span></div><div class="muted tiny"><span id="xp">0</span> / <span id="nextXp">100</span> XP</div></div>
+      </div>
+      <div class="stats-grid">
+        <div><small>XP TOTAL</small><b id="totalXp">0</b></div>
+        <div><small>MISIONES</small><b id="completed">0</b></div>
+        <div><small>RACHA</small><b id="streak">0 días</b></div>
+        <div><small>DÍA DEL PLAN</small><b id="planDay">1 / 30</b></div>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" data-tab="missions">Misiones</button>
+      <button class="tab" data-tab="progress">Progreso</button>
+      <button class="tab" data-tab="catalog">Categorías</button>
+    </nav>
+
+    <section id="missions" class="view">
+      <div class="section-heading"><div><div class="eyebrow">PROTOCOLO DIARIO</div><h1>Misiones de hoy</h1></div><span class="date-pill" id="today"></span></div>
+      <div id="missionList" class="mission-list"></div>
+      <button id="newDayBtn" class="secondary-btn">Generar misiones de hoy</button>
+      <p class="hint">Completa las misiones cuando las hayas realizado. Tu progreso se guarda en este dispositivo.</p>
+    </section>
+
+    <section id="progress" class="view hidden">
+      <div class="eyebrow">EVOLUCIÓN</div><h1>Tu progreso</h1>
+      <div class="panel progress-panel">
+        <div class="progress-number" id="progressPercent">0%</div>
+        <div class="muted">DEL PLAN DE 30 DÍAS</div>
+        <div class="xp-line wide"><span id="daysFill"></span></div>
+        <p id="progressMessage">Cada misión completada cuenta.</p>
+      </div>
+      <h2>Logros</h2>
+      <div id="achievements" class="achievement-list"></div>
+      <h2>Últimos registros</h2>
+      <div id="history" class="history-list"></div>
+    </section>
+
+    <section id="catalog" class="view hidden">
+      <div class="eyebrow">ÁREAS DE DESARROLLO</div><h1>Ocho categorías</h1>
+      <div id="categoryList" class="category-list"></div>
+    </section>
+  </main>
+
+  <footer><span>THE SYSTEM · VERSIÓN 1.0</span><span>Tu progreso, a tu ritmo.</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
