@@ -1,70 +1,207 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080d18">
-  <meta name="description" content="THE SYSTEM: tu sistema personal de misiones y progreso.">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <title>THE SYSTEM</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090b13">
+<title>THE SYSTEM</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b13'/%3E%3Cpath d='M32 10l16 28H16z' fill='%234aa8ff'/%3E%3Ccircle cx='32' cy='46' r='6' fill='%23ff8f3f'/%3E%3C/svg%3E">
+<style>
+:root{--void:#090b13;--panel:#121726;--panel2:#171e33;--edge:#26335a;--blue:#4aa8ff;--gold:#e8bd61;--ember:#ff8f3f;--txt:#e9eefc;--mut:#8b97b8;--ok:#5fd0b0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--void);color:var(--txt);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{background:radial-gradient(120% 60% at 50% -10%,#14234a 0,var(--void) 60%) no-repeat;min-height:100vh;padding:env(safe-area-inset-top) 0 calc(76px + env(safe-area-inset-bottom))}
+h1,h2,h3,.serif{font-family:"Palatino Linotype",Palatino,Georgia,serif;margin:0;letter-spacing:.2px}
+main{max-width:520px;margin:0 auto;padding:12px 14px}
+.hero{border:1px solid var(--edge);border-radius:18px;padding:14px;background:linear-gradient(160deg,#16213f,var(--panel));box-shadow:0 0 0 1px #0b1226 inset,0 0 28px #2b6cff22}
+.hero .row{display:flex;align-items:center;gap:12px}
+.rank{width:58px;height:58px;border-radius:14px;border:2px solid var(--gold);display:grid;place-items:center;font:700 30px Georgia,serif;color:var(--gold);background:#0d1328;box-shadow:0 0 18px #e8bd6140}
+.hero h1{font-size:22px}
+.sub{color:var(--mut);font-size:13px}
+.bar{height:10px;border-radius:6px;background:#0b1226;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#2b7fff,var(--blue));transition:width .5s}
+h2{font-size:18px;margin:20px 2px 10px;display:flex;justify-content:space-between;align-items:baseline}
+h2 small{font:13px system-ui;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hc{position:relative;border:1px solid var(--edge);border-radius:14px;background:var(--panel);padding:10px 6px 8px;text-align:center;cursor:pointer;min-height:132px;display:flex;flex-direction:column;align-items:center;gap:3px;transition:transform .15s,background .3s}
+.hc:active{transform:scale(.96)}
+.hc .ic{font-size:30px;line-height:1.1;margin-top:8px}
+.hc .nm{font:600 13px/1.15 Georgia,serif}
+.hc .fr{font-size:11px;color:var(--mut)}
+.hc .fl{position:absolute;left:7px;top:6px;font-size:11px;color:var(--ember)}
+.hc .inf{position:absolute;right:2px;top:0;border:0;background:none;color:var(--mut);font-size:16px;padding:6px 8px}
+.dots{display:flex;gap:3px;margin-top:auto}
+.dots b{width:9px;height:9px;border-radius:3px;background:#222c4a}
+.dots b.on{background:var(--ember);box-shadow:0 0 6px #ff8f3f80}
+.dots b.t{outline:1.5px solid var(--edge);outline-offset:1px}
+.hc.done{background:linear-gradient(180deg,#2a1d12,#3a2210);border-color:#a95a22;box-shadow:0 0 18px #ff8f3f30}
+.hc.done::after{content:"✔";position:absolute;inset:0;display:grid;place-items:center;font-size:54px;color:#ff8f3f55;pointer-events:none}
+.hc.q .ic{filter:hue-rotate(0)}
+.hc.add{border-style:dashed;background:transparent;color:var(--mut);justify-content:center}
+.chk{border:1px solid var(--blue);border-radius:16px;padding:14px;background:linear-gradient(160deg,#10264f,#0e1530);box-shadow:0 0 24px #2b8cff33}
+.chk h3{font-size:18px}
+.chests{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.chest{border:1px solid var(--edge);background:var(--panel);border-radius:12px;padding:12px 0;font-size:34px;color:var(--txt);cursor:pointer}
+.chest:active{transform:scale(.94)}
+.done-ck{border:1px solid var(--edge);border-radius:14px;padding:10px 14px;color:var(--mut);background:var(--panel)}
+.sug{display:flex;align-items:center;gap:10px;border:1px solid var(--edge);border-radius:12px;background:var(--panel);padding:10px 12px;margin-bottom:8px}
+.sug .ic{font-size:26px}
+.sug div{flex:1}
+.sug b{font-family:Georgia,serif}
+.btn{border:1px solid var(--edge);background:var(--panel2);color:var(--txt);border-radius:999px;padding:9px 16px;font:600 14px system-ui;cursor:pointer}
+.btn.p{background:linear-gradient(180deg,#ffa157,#f0742a);color:#2a1204;border:0}
+.btn.b{background:linear-gradient(180deg,#4aa8ff,#2b7fff);color:#04122b;border:0}
+.btn.d{color:#ff7b86;border-color:#5a2a34}
+.seg{display:flex;background:#0d1328;border-radius:999px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;color:var(--mut);padding:9px;border-radius:999px;font:600 14px system-ui}
+.seg button.on{background:var(--panel2);color:var(--gold)}
+.attr{display:flex;align-items:center;gap:10px;border:1px solid var(--edge);border-radius:14px;background:var(--panel);padding:10px 12px;margin-bottom:8px}
+.attr .ic{font-size:24px}
+.attr .m{flex:1}
+.attr .t{display:flex;justify-content:space-between;font:600 14px Georgia,serif}
+.attr .bar{margin-top:6px;height:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{border:1px solid var(--edge);border-radius:12px;background:var(--panel);padding:10px;text-align:center}
+.stat b{display:block;font:700 22px Georgia,serif;color:var(--gold)}
+.stat span{font-size:12px;color:var(--mut)}
+.ach{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ac{border:1px solid var(--edge);border-radius:12px;background:var(--panel);padding:8px 2px;text-align:center;font-size:11px;color:var(--mut);opacity:.45}
+.ac span{display:block;font-size:26px}
+.ac.on{opacity:1;color:var(--txt);border-color:var(--gold)}
+nav{position:fixed;left:0;right:0;bottom:0;background:#0b1020ee;backdrop-filter:blur(8px);border-top:1px solid var(--edge);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5}
+nav button{flex:1;border:0;background:none;color:var(--mut);font:600 12px system-ui;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:22px}
+nav button.on{color:var(--blue)}
+#ov{position:fixed;inset:0;background:#000a;z-index:9;display:none;align-items:flex-end}
+#ov.on{display:flex}
+#sheet{width:100%;max-width:520px;margin:0 auto;background:linear-gradient(180deg,#1a2342,var(--panel));border:1px solid var(--edge);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sh{display:flex;gap:12px;align-items:center}
+.sh .ic{font-size:36px;width:60px;height:60px;border-radius:14px;background:#0d1328;display:grid;place-items:center}
+.why{background:#0d1328;border-radius:12px;padding:12px;margin:14px 0;color:#c8d2ee}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{border:1px solid var(--edge);border-radius:999px;padding:4px 10px;font-size:12px}
+.acts{display:flex;gap:8px;margin-top:14px}
+.acts .btn{flex:1}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+input[type=text],select{width:100%;background:#0d1328;border:1px solid var(--edge);border-radius:10px;color:var(--txt);padding:11px;font:15px system-ui}
+#toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top));transform:translate(-50%,-90px);background:var(--gold);color:#2a1d04;font:700 15px Georgia,serif;padding:10px 18px;border-radius:999px;z-index:20;transition:transform .3s;box-shadow:0 6px 24px #0008;max-width:90vw;text-align:center}
+#toast.on{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand"><span class="brand-mark">S</span><div><b>THE SYSTEM</b><small>PERSONAL GROWTH PROTOCOL</small></div></div>
-    <button id="resetBtn" class="icon-btn" title="Reiniciar datos" aria-label="Reiniciar datos">↻</button>
-  </header>
-
-  <main>
-    <section class="hero panel">
-      <div class="eyebrow">ESTADO DEL JUGADOR</div>
-      <div class="hero-row">
-        <div><div class="rank" id="rank">E</div><div class="muted">RANGO ACTUAL</div></div>
-        <div class="level-wrap"><div class="muted">NIVEL <strong id="level">1</strong></div><div class="xp-line"><span id="xpFill"></span></div><div class="muted tiny"><span id="xp">0</span> / <span id="nextXp">100</span> XP</div></div>
-      </div>
-      <div class="stats-grid">
-        <div><small>XP TOTAL</small><b id="totalXp">0</b></div>
-        <div><small>MISIONES</small><b id="completed">0</b></div>
-        <div><small>RACHA</small><b id="streak">0 días</b></div>
-        <div><small>DÍA DEL PLAN</small><b id="planDay">1 / 30</b></div>
-      </div>
-    </section>
-
-    <nav class="tabs" aria-label="Secciones">
-      <button class="tab active" data-tab="missions">Misiones</button>
-      <button class="tab" data-tab="progress">Progreso</button>
-      <button class="tab" data-tab="catalog">Categorías</button>
-    </nav>
-
-    <section id="missions" class="view">
-      <div class="section-heading"><div><div class="eyebrow">PROTOCOLO DIARIO</div><h1>Misiones de hoy</h1></div><span class="date-pill" id="today"></span></div>
-      <div id="missionList" class="mission-list"></div>
-      <button id="newDayBtn" class="secondary-btn">Generar misiones de hoy</button>
-      <p class="hint">Completa las misiones cuando las hayas realizado. Tu progreso se guarda en este dispositivo.</p>
-    </section>
-
-    <section id="progress" class="view hidden">
-      <div class="eyebrow">EVOLUCIÓN</div><h1>Tu progreso</h1>
-      <div class="panel progress-panel">
-        <div class="progress-number" id="progressPercent">0%</div>
-        <div class="muted">DEL PLAN DE 30 DÍAS</div>
-        <div class="xp-line wide"><span id="daysFill"></span></div>
-        <p id="progressMessage">Cada misión completada cuenta.</p>
-      </div>
-      <h2>Logros</h2>
-      <div id="achievements" class="achievement-list"></div>
-      <h2>Últimos registros</h2>
-      <div id="history" class="history-list"></div>
-    </section>
-
-    <section id="catalog" class="view hidden">
-      <div class="eyebrow">ÁREAS DE DESARROLLO</div><h1>Ocho categorías</h1>
-      <div id="categoryList" class="category-list"></div>
-    </section>
-  </main>
-
-  <footer><span>THE SYSTEM · VERSIÓN 1.0</span><span>Tu progreso, a tu ritmo.</span></footer>
-  <script src="app.js"></script>
+<main id="app"></main>
+<nav id="nav"></nav>
+<div id="ov"><div id="sheet"></div></div>
+<div id="toast"></div>
+<script>
+const K='thesystem_v2',XP=[10,20,35,50,75],DN=['Muy fácil','Fácil','Intermedia','Difícil','Especial'];
+const ATTR={dis:['Disciplina','🛡️'],con:['Conocimiento','📚'],sal:['Salud','❤️'],org:['Organización','🗂️'],fin:['Finanzas','💰'],cre:['Creatividad','✨']};
+const CAT={const:['Constancia','dis'],sal:['Salud','sal'],fin:['Finanzas','fin'],hig:['Higiene','sal'],apr:['Aprendizaje','con'],pro:['Productividad','org'],des:['Desarrollo personal','con'],cont:['Contenido','cre']};
+const T=[
+['uno','☝️','Hacer una cosa pequeña a propósito','const',0,'diaria','La constancia se entrena con acciones mínimas. Lo importante es no romper la cadena, no el tamaño de la acción.'],
+['rev','🔁','Revisar mis misiones del día','const',0,'diaria','Abrir el sistema cada día es el hábito que sostiene a todos los demás.'],
+['agua','💧','Tomar un vaso de agua','sal',0,'diaria','Tomar agua con constancia ayuda a la energía y la concentración, y es una buena base para dejar bebidas azucaradas.'],
+['cam','🚶','Caminar 10 minutos','sal',1,'3 días por semana','Moverte un poco cada día mejora el ánimo, el sueño y la salud del corazón.'],
+['fru','🍎','Comer una fruta o verdura','sal',0,'diaria','Variar los alimentos es más fácil si empiezas sumando algo, no quitando.'],
+['com','🍽️','Planear la próxima comida','sal',1,'3 días por semana','Decidir antes de tener hambre evita comer lo primero que aparece.'],
+['azu','🥤','Sin bebida azucarada hoy','sal',1,'diaria','Cada día que resistes baja el azúcar que tomas y refuerza tu control.',1],
+['gas','🧾','Anotar un gasto','fin',0,'diaria','Anotar un solo gasto ya mantiene vivo el registro. Lo difícil es retomarlo, no hacerlo.'],
+['deu','📋','Escribir una deuda y su monto','fin',1,'2 días por semana','No puedes organizar lo que no ves. Tener la lista completa es el primer paso.'],
+['aho','🐷','Apartar una moneda para ahorro','fin',1,'2 días por semana','El monto importa menos que crear la costumbre de apartar algo.'],
+['die','🪥','Lavarme los dientes','hig',0,'diaria','Es el hábito más corto con más retorno: salud dental y una señal diaria de cuidado personal.'],
+['dus','🚿','Rutina de aseo','hig',0,'diaria','Una rutina fija evita decidir cada día y hace que el aseo sea automático.'],
+['ord','🧹','Ordenar mi espacio 5 minutos','hig',1,'3 días por semana','Cinco minutos bastan para que el espacio deje de acumularse.'],
+['py','🐍','Practicar Python 15 minutos','apr',2,'2 días por semana','Python es la base del análisis de datos. Practicar poco y seguido supera a las maratones.'],
+['sql','🗄️','Resolver un ejercicio de SQL','apr',2,'2 días por semana','SQL es lo que más piden en puestos de datos. Un ejercicio por sesión construye el hábito.'],
+['dat','📊','Mirar un conjunto de datos o gráfico','apr',1,'2 días por semana','Leer datos reales entrena el ojo analítico antes de saber todas las herramientas.'],
+['pen','📝','Anotar 3 pendientes','pro',0,'diaria','Sacar los pendientes de la cabeza libera atención y baja el estrés.'],
+['pla','📅','Planear el día siguiente','pro',1,'3 días por semana','Un plan corto con horarios variables te evita improvisar todo.'],
+['lee','📖','Leer 5 páginas','des',0,'diaria','Cinco páginas al día son varios libros al año, y la atención se reconstruye con cada página.'],
+['cur','🔎','Investigar un tema curioso','des',1,'2 días por semana','La curiosidad alimenta ideas, conversación y contenido.'],
+['ide','💡','Anotar una idea de contenido','cont',0,'2 días por semana','Las ideas se pierden si no se anotan. Una por vez alimenta el canal.'],
+['gui','🎬','Escribir parte de un guion','cont',2,'2 días por semana','Avanzar un poco el guion hace que publicar deje de ser un salto grande.'],
+['pub','📤','Publicar contenido','cont',3,'2 días por semana','Publicar es lo que cuenta. Cada video subido te enseña más que diez planeados.']
+];
+const mk=t=>({id:t[0],i:t[1],n:t[2],c:t[3],d:t[4],f:t[5],w:t[6],q:t[7]||0});
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const day=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+let S=null;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+if(!S||!S.h)S={s:day(0),h:['uno','agua','die','pen','lee'].map(id=>mk(T.find(t=>t[0]==id))),l:{},ck:{}};
+let tab='hoy',seg='h';
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const act=()=>S.h.filter(h=>!h.x);
+const done=(id,n=0)=>S.l[id]&&S.l[id][day(n)];
+function calc(){let tot=0,n=0,ax={};for(const h of S.h){const a=CAT[h.c]?CAT[h.c][1]:'dis';for(const k in S.l[h.id]||{}){const x=S.l[h.id][k];tot+=x;n++;ax[a]=(ax[a]||0)+x}}
+ let ck=0;for(const k in S.ck){tot+=S.ck[k];ck++}
+ const lv=Math.floor(tot/100)+1;return{tot,n,ax,ck,lv,rk:lv<=5?'E':lv<=10?'D':lv<=20?'C':lv<=30?'B':lv<=40?'A':'S'}}
+const streak=id=>{let n=0,i=done(id)?0:1;while(S.l[id]&&S.l[id][day(i)]){n++;i++}return n};
+const anyDay=n=>S.h.some(h=>S.l[h.id]&&S.l[h.id][day(n)]);
+function gstreak(){let best=0,cur=0;for(let i=120;i>=0;i--){if(anyDay(i)){cur++;best=Math.max(best,cur)}else cur=0}return best}
+let tt;function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),2200)}
+function dots(id){let s='';for(let i=6;i>=0;i--)s+='<b class="'+(done(id,i)?'on':'')+(i==0?' t':'')+'"></b>';return'<div class="dots">'+s+'</div>'}
+function card(h){const st=streak(h.id);return'<div class="hc'+(done(h.id)?' done':'')+(h.q?' q':'')+'" data-a="tog" data-id="'+h.id+'">'+(st?'<span class="fl">🔥 '+st+'</span>':'')+'<button class="inf" data-a="info" data-id="'+h.id+'" aria-label="Detalle">ⓘ</button><div class="ic">'+h.i+'</div><div class="nm">'+esc(h.n)+'</div><div class="fr">'+esc(h.f)+'</div>'+dots(h.id)+'</div>'}
+function vHoy(){const c=calc(),t=day(0),n=Math.floor((new Date(t+'T00:00')-new Date(S.s+'T00:00'))/864e5)+1;
+ const lvx=c.tot%100;
+ let h='<div class="hero"><div class="row"><div class="rank">'+c.rk+'</div><div style="flex:1"><h1>Nivel '+c.lv+'</h1><div class="sub">'+(n<=30?'Día '+n+' de 30':'Plan de 30 días completado, día '+n)+'. Racha: '+gstreak()+' días</div></div></div><div class="bar"><i style="width:'+lvx+'%"></i></div><div class="sub" style="margin-top:6px">'+lvx+' de 100 XP para el siguiente nivel</div></div>';
+ if(!S.ck[t])h+='<h2>Check-in diario</h2><div class="chk"><h3>Un nuevo día</h3><div class="sub">Elige un cofre y reclama tu bonus de XP.</div><div class="chests"><button class="chest" data-a="chest">🎁</button><button class="chest" data-a="chest">🎁</button><button class="chest" data-a="chest">🎁</button></div></div>';
+ else h+='<div class="done-ck" style="margin-top:12px">Check-in hecho hoy: +'+S.ck[t]+' XP</div>';
+ const hs=act(),dn=hs.filter(x=>done(x.id)).length;
+ h+='<h2>Misiones de hoy <small>'+dn+' de '+hs.length+'</small></h2>';
+ h+=hs.length?'<div class="grid">'+hs.map(card).join('')+'<div class="hc add" data-a="tab" data-t="hab"><div class="ic">＋</div><div class="nm">Nueva misión</div></div></div>':'<div class="done-ck">Aún no tienes misiones. Agrega una desde el catálogo.</div>';
+ const own=new Set(hs.map(x=>x.id)),pool=T.filter(x=>!own.has(x[0])&&!x[7]),k=Math.floor(Date.now()/864e5);
+ if(pool.length){h+='<h2>Sugeridas para hoy</h2>';for(let i=0;i<Math.min(3,pool.length);i++){const x=pool[(k+i*5)%pool.length];h+='<div class="sug"><div class="ic">'+x[1]+'</div><div><b>'+x[2]+'</b><div class="sub">'+CAT[x[3]][0]+', '+XP[x[4]]+' XP</div></div><button class="btn b" data-a="add" data-id="'+x[0]+'">Añadir</button></div>'}}
+ return h}
+function vHab(){const own=new Set(act().map(x=>x.id));
+ let h='<div class="seg"><button class="'+(seg=='h'?'on':'')+'" data-a="seg" data-t="h">Hábitos</button><button class="'+(seg=='q'?'on':'')+'" data-a="seg" data-t="q">Dejar malos hábitos</button></div><div class="grid">';
+ h+='<div class="hc add" data-a="newf"><div class="ic">📝</div><div class="nm">Crear la tuya</div></div>';
+ for(const x of T.filter(x=>seg=='q'?x[7]:!x[7])){h+='<div class="hc'+(own.has(x[0])?' done':'')+'" data-a="'+(own.has(x[0])?'info':'add')+'" data-id="'+x[0]+'"><div class="ic">'+x[1]+'</div><div class="nm">'+x[2]+'</div><div class="fr">'+x[5]+'</div><div class="fr">'+XP[x[4]]+' XP</div></div>'}
+ if(seg=='q')for(const x of S.h.filter(x=>x.custom&&x.q&&!x.x))h+=card(x);
+ return h+'</div>'}
+const AC=[['⚔️','Primera misión',s=>s.n>=1],['🔥','Racha de 3 días',s=>s.g>=3],['🌋','Racha de 7 días',s=>s.g>=7],['🎯','10 misiones',s=>s.n>=10],['🏅','50 misiones',s=>s.n>=50],['⭐','Nivel 5',s=>s.lv>=5],['👑','Nivel 10',s=>s.lv>=10],['🎁','5 check-ins',s=>s.ck>=5]];
+function vPer(){const c=calc(),s={n:c.n,g:gstreak(),lv:c.lv,ck:c.ck};
+ let h='<div class="stats"><div class="stat"><b>'+c.tot+'</b><span>XP total</span></div><div class="stat"><b>'+c.n+'</b><span>Misiones</span></div><div class="stat"><b>'+s.g+'</b><span>Mejor racha</span></div></div><h2>Atributos</h2>';
+ for(const k in ATTR){const x=c.ax[k]||0;h+='<div class="attr"><div class="ic">'+ATTR[k][1]+'</div><div class="m"><div class="t"><span>'+ATTR[k][0]+'</span><span>Nv. '+(Math.floor(x/50)+1)+'</span></div><div class="bar"><i style="width:'+(x%50)*2+'%"></i></div></div></div>'}
+ h+='<h2>Logros</h2><div class="ach">'+AC.map(a=>'<div class="ac'+(a[2](s)?' on':'')+'"><span>'+a[0]+'</span>'+a[1]+'</div>').join('')+'</div>';
+ h+='<h2>Datos</h2><div class="acts"><button class="btn" data-a="exp">Copiar respaldo</button><button class="btn" data-a="imp">Restaurar</button></div><div class="acts"><button class="btn d" data-a="rst">Reiniciar todo</button></div>';
+ return h}
+function render(){const v={hoy:vHoy,hab:vHab,per:vPer}[tab]();$('#app').innerHTML=v;
+ $('#nav').innerHTML=[['hoy','🔥','Hoy'],['hab','➕','Misiones'],['per','🛡️','Perfil']].map(x=>'<button class="'+(tab==x[0]?'on':'')+'" data-a="tab" data-t="'+x[0]+'"><span>'+x[1]+'</span>'+x[2]+'</button>').join('')}
+function sheet(h){$('#sheet').innerHTML=h;$('#ov').classList.add('on')}
+function close(){$('#ov').classList.remove('on')}
+function info(id){const h=S.h.find(x=>x.id==id)||mk(T.find(t=>t[0]==id));if(!h)return;const a=CAT[h.c]?CAT[h.c][1]:'dis',own=S.h.some(x=>x.id==id&&!x.x);
+ let hist='';for(let i=13;i>=0;i--)hist+='<b class="'+(done(id,i)?'on':'')+'"></b>';
+ sheet('<div class="sh"><div class="ic">'+h.i+'</div><div><h1 style="font-size:21px">'+esc(h.n)+'</h1><div class="sub">'+esc(h.f)+(streak(id)?', racha de '+streak(id)+' días':'')+'</div></div></div>'+
+ (h.w?'<div class="why"><b class="serif">Por qué importa</b><br>'+esc(h.w)+'</div>':'<div style="height:12px"></div>')+
+ '<div class="chips"><span class="chip">'+DN[h.d]+', +'+XP[h.d]+' XP</span><span class="chip">'+ATTR[a][1]+' '+ATTR[a][0]+' ↑</span><span class="chip">'+(CAT[h.c]?CAT[h.c][0]:'')+'</span></div>'+
+ (own?'<div class="sub">Últimos 14 días</div><div class="dots" style="margin-top:6px">'+hist+'</div><div class="acts"><button class="btn d" data-a="del" data-id="'+id+'">Quitar</button><button class="btn p" data-a="tog2" data-id="'+id+'">'+(done(id)?'Desmarcar hoy':(h.q?'Resistí hoy':'Completada hoy'))+'</button></div>':'<div class="acts"><button class="btn b" data-a="add2" data-id="'+id+'">Añadir a mis misiones</button></div>'))}
+function newf(){sheet('<h1 style="font-size:21px">Crear tu misión</h1><label>Nombre</label><input type="text" id="cn" maxlength="40" placeholder="Ej.: Revisar mis deudas"><label>Categoría</label><select id="cc">'+Object.keys(CAT).map(k=>'<option value="'+k+'">'+CAT[k][0]+'</option>').join('')+'</select><label>Dificultad</label><select id="cd">'+DN.map((d,i)=>'<option value="'+i+'">'+d+' ('+XP[i]+' XP)</option>').join('')+'</select><label>Frecuencia</label><input type="text" id="cf" value="diaria" maxlength="24"><label><input type="checkbox" id="cq"> Es un mal hábito que quiero dejar</label><div class="acts"><button class="btn" data-a="x">Cancelar</button><button class="btn p" data-a="mk">Guardar</button></div>')}
+function addH(id){const o=S.h.find(x=>x.id==id);if(o)o.x=0;else S.h.push(mk(T.find(t=>t[0]==id)));save();toast('Misión añadida')}
+function tog(id){const h=S.h.find(x=>x.id==id),L=S.l[id]=S.l[id]||{},t=day(0),b=calc().lv;
+ if(L[t]){delete L[t];toast('Misión desmarcada')}else{L[t]=XP[h.d];const a=calc();toast(a.lv>b?'¡Subiste al nivel '+a.lv+'!':'+'+XP[h.d]+' XP')}save()}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el){if(e.target.id=='ov')close();return}
+ const a=el.dataset.a,id=el.dataset.id;e.stopPropagation();
+ if(a=='tab'){tab=el.dataset.t;close();render();scrollTo(0,0)}
+ else if(a=='seg'){seg=el.dataset.t;render()}
+ else if(a=='tog'){tog(id);render()}
+ else if(a=='tog2'){tog(id);close();render()}
+ else if(a=='info')info(id);
+ else if(a=='add'){addH(id);render()}
+ else if(a=='add2'){addH(id);close();render()}
+ else if(a=='del'){const h=S.h.find(x=>x.id==id);if(h){h.x=1;save()}close();render()}
+ else if(a=='chest'){const t=day(0),b=[0,5,10,15,20][Math.floor(Math.random()*5)],lv=calc().lv;S.ck[t]=5+b;save();toast('Cofre abierto: +'+(5+b)+' XP');if(calc().lv>lv)setTimeout(()=>toast('¡Subiste al nivel '+calc().lv+'!'),2300);render()}
+ else if(a=='newf')newf();
+ else if(a=='x')close();
+ else if(a=='mk'){const n=$('#cn').value.trim();if(!n){toast('Escribe un nombre');return}
+  S.h.push({id:'c'+Date.now(),i:$('#cq').checked?'🚫':'⭐',n,c:$('#cc').value,d:+$('#cd').value,f:$('#cf').value.trim()||'diaria',w:'Misión creada por ti.',q:$('#cq').checked?1:0,custom:1});save();close();render();toast('Misión creada')}
+ else if(a=='exp'){const j=JSON.stringify(S);(navigator.clipboard?navigator.clipboard.writeText(j):Promise.reject()).then(()=>toast('Respaldo copiado')).catch(()=>prompt('Copia tu respaldo:',j))}
+ else if(a=='imp'){const j=prompt('Pega aquí tu respaldo:');if(j){try{const o=JSON.parse(j);if(!o.h||!o.l)throw 0;S=o;save();render();toast('Datos restaurados')}catch(x){toast('El respaldo no es válido')}}}
+ else if(a=='rst'){if(confirm('¿Borrar todo tu progreso?')){localStorage.removeItem(K);location.reload()}}
+});
+render();
+</script>
 </body>
 </html>
